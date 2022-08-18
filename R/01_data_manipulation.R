@@ -4,11 +4,12 @@
 
 ## Loading packages
 library(tidyr)
+library(dplyr)
 
 
 # Reading the data
 
-tricho_data <- read.csv("data/raw/tricho_data.csv", sep = ';', na.strings=c("","NA"))
+tricho_data <- read.csv("data/raw/tricho_data.csv", sep = ';', na.strings=c("","NA", "N/A"))
 
 
 # Exploring the data
@@ -19,7 +20,7 @@ summary(tricho_data)
 names(tricho_data)
 
 # Removing the 'observações' and 'se.alimentando' column
-tricho_data <- subset(tricho_data, select = -c(observacoes, se_alimentando))
+tricho_data <- subset(tricho_data, select = -c(observacoes, se_alimentando, Tamanho_teia))
 names(tricho_data)
 
 # Checking to see if the names of the species in the spp clumns are correct
@@ -46,7 +47,7 @@ unique(tricho_data$Sexo)
 tricho_data["Sexo"][tricho_data["Sexo"] == "Macho " |
                       tricho_data["Sexo"] ==  "Macho" |
                       tricho_data["Sexo"] == "Macho\n"] <- "macho"
-richo_data["Sexo"][tricho_data["Sexo"] == "Femea\n" |
+tricho_data["Sexo"][tricho_data["Sexo"] == "Femea\n" |
                      tricho_data["Sexo"] == "Femea"] <- "femea"
 
 unique(tricho_data$agregado)
@@ -64,6 +65,9 @@ tricho_data$Idade <- factor(tricho_data$Idade)
 tricho_data$colar <- factor(tricho_data$colar)
 tricho_data$agregado <- factor(tricho_data$agregado)
 tricho_data$se_alimentando.1 <- factor (tricho_data$se_alimentando.1)
+
+
+
 
 # FOr posterior analisys (describe here what are the analisys), it would be easier to have a
 # with only the females
