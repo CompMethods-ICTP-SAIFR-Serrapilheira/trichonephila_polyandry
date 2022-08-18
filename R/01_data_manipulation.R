@@ -23,6 +23,14 @@ names(tricho_data)
 tricho_data <- subset(tricho_data, select = -c(observacoes, se_alimentando, Tamanho_teia))
 names(tricho_data)
 
+# Changing the names of the columns
+names(tricho_data)
+colnames(tricho_data) <- c("collectors","ID_individual","ID_web", "ID_aggregate", "time", "local",
+                           "experiment", "spp", "type", "sex", "age", "web_heigth", "n_argy", "n_males",
+                           "mass_g", "total_length_mm", "cephalot_width_mm", "food_string", "fs_mass",
+                           "aggregate", "n_fem_aggregate", "if_feeding" )
+View(tricho_data)
+
 # Checking to see if the names of the species in the spp clumns are correct
 unique(tricho_data$spp)
 #we can see that there are three different notations for the same species: Argyrodes elevatus
@@ -32,48 +40,46 @@ tricho_data["spp"][tricho_data["spp"] == "        Argyrodes elevatus" |
 
 # Checking all future factor columns to see if the notation is correct, and changing
 # their names if necessary
-unique(tricho_data$se_alimentando.1)
-
-unique(tricho_data$Local)
-tricho_data["Local"][tricho_data["Local"] == "Regiao Lagoa" |
-                       tricho_data["Local"] == "Regi\xe3o Lagoa" |
-                       tricho_data["Local"] == "Regiao Lagoa\n"   ] <- "regiao lagoa"
-tricho_data["Local"][tricho_data["Local"] == "Port\xe3o Amarelo"] <- "portao amarelo"
+unique(tricho_data$if_feeding)
+tricho_data["if_feeding"][tricho_data["if_feeding"] == "nao"] <- "no"
+tricho_data["if_feeding"][tricho_data["if_feeding"] == "sim"] <- "yes"
 
 
-unique(tricho_data$tipo)
+unique(tricho_data$local)
+tricho_data["local"][tricho_data["local"] == "Regiao Lagoa" |
+                       tricho_data["local"] == "Regi\xe3o Lagoa" |
+                       tricho_data["local"] == "Regiao Lagoa\n"   ] <- "regiao lagoa"
+tricho_data["local"][tricho_data["local"] == "Port\xe3o Amarelo"] <- "portao amarelo"
 
-unique(tricho_data$Sexo)
-tricho_data["Sexo"][tricho_data["Sexo"] == "Macho " |
-                      tricho_data["Sexo"] ==  "Macho" |
-                      tricho_data["Sexo"] == "Macho\n"] <- "macho"
-tricho_data["Sexo"][tricho_data["Sexo"] == "Femea\n" |
-                     tricho_data["Sexo"] == "Femea"] <- "femea"
 
-unique(tricho_data$agregado)
-
-unique(tricho_data$colar)
-
-# For posterior analysis, it is important to have some columns parameters defined as factors
-class(tricho_data$spp)
-
-tricho_data$spp <- factor(tricho_data$spp)
-tricho_data$Local <- factor(tricho_data$Local)
-tricho_data$tipo <- factor(tricho_data$tipo)
-tricho_data$Sexo <- factor(tricho_data$Sexo)
-tricho_data$Idade <- factor(tricho_data$Idade)
-tricho_data$colar <- factor(tricho_data$colar)
-tricho_data$agregado <- factor(tricho_data$agregado)
-tricho_data$se_alimentando.1 <- factor (tricho_data$se_alimentando.1)
+unique(tricho_data$type)
+tricho_data["type"][tricho_data["type"] == "femea"] <- "female"
+tricho_data["type"][tricho_data["type"] == "inquilino"] <- "tennant"
 
 
 
+unique(tricho_data$sex)
+tricho_data["sex"][tricho_data["sex"] == "Macho " |
+                      tricho_data["sex"] ==  "Macho" |
+                      tricho_data["sex"] ==  "macho" |
+                      tricho_data["sex"] == "Macho\n"] <- "male"
+tricho_data["sex"][tricho_data["sex"] == "Femea\n" |
+                      tricho_data["sex"] == "femea" |
+                     tricho_data["sex"] == "Femea"] <- "female"
 
-# FOr posterior analisys (describe here what are the analisys), it would be easier to have a
-# with only the females
-?dplyr::filter()
+unique(tricho_data$aggregate)
+tricho_data["aggregate"][tricho_data["aggregate"] == "nao"] <- "no"
+tricho_data["aggregate"][tricho_data["aggregate"] == "sim"] <- "yes"
 
+
+unique(tricho_data$food_string)
+tricho_data["food_string"][tricho_data["food_string"] == "com"] <- "present"
+tricho_data["food_string"][tricho_data["food_string"] == "sem"] <- "absent"
+
+
+# For posterior analysis, it will be important to have a table with the females T. clavipes
 tricho_female <-  tricho_data %>% filter(tricho_data$spp == "Trichonephila clavipes")
+
 
 
 # creating a new data set with all the modifications and exporting it
