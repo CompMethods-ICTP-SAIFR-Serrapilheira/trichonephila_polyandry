@@ -1,6 +1,6 @@
 # Scientific programming course ICTP-Serrapilheira August-2022
 # Project: Polyandry in Trichonephila clavipes
-# Script 3: LM
+# Script 3: GLM
 
 ## In this script we will use generalized linear models to analyse the relationships between
 # the number of males in a web with the Trichonephila clavipes females parameters, as well as the
@@ -8,14 +8,12 @@
 
 
 ## Install packages
-#install.packages("packages/modelvalidation_0.4.0.tar.gz", repos = NULL, type = "source")
 #install.packages("MuMIn")
 #install.packages("bbmle")
 #install.packages("DHARMa") #qq
 #install.packages("psych") #multicolinearity
 #install.packages("regclass") #vif
 library(bbmle)
-library(modelvalidation)
 library(PerformanceAnalytics)
 library(MuMIn)
 library(DHARMa)
@@ -45,7 +43,7 @@ dataglm_nmales <- data.frame(tricho_female$n_males, tricho_female$pres_argy, tri
 
 head(tricho_female)
 
-tcglm <- glm(n_males ~  pres_argy + food_string + aggregate + BC,
+tcglm1 <- glm(n_males ~  pres_argy + food_string + aggregate + BC,
              family = poisson(link="log"), data = tricho_female,
              na.action = "na.omit" )
 tcglm2 <- glm(n_males ~  food_string + aggregate + BC,
@@ -94,12 +92,12 @@ tcglm16 <- glm(n_males ~  1,
              family = poisson(link="log"), data = tricho_female,
              na.action = "na.omit" )
 
-AICtab (tcglm, tcglm2 , tcglm3, tcglm4, tcglm5, tcglm6, tcglm7, tcglm8,
+tcAIC <- AICtab (tcglm1, tcglm2 , tcglm3, tcglm4, tcglm5, tcglm6, tcglm7, tcglm8,
         tcglm9, tcglm10, tcglm11, tcglm12, tcglm13, tcglm14, tcglm15, tcglm16,
         base = TRUE, weights = TRUE)
-
+tcAIC
 ## I cannot discard the dAIC smaller than 2, but we should take in considerations the two models
-# with the smallest AIC: tcglm3 and tcglm11. The secong one has a higher delta than the first, but
+# with the smallest AIC: tcglm3 and tcglm11. The second one has a higher delta than the first, but
 # it has less parameters.
 
 ## Validating the model (checking if the chosed method fits the assumptions)
@@ -133,7 +131,14 @@ summary(tcglm3)
 par(mfrow = c(2,2))
 boxplot(n_males ~ pres_argy, data = tricho_female)
 boxplot(n_males ~ aggregate , data = tricho_female)
-plot(n_males ~ BC , data = tricho_female)
+plot(n_males ~ BC , data = tricho_female,
+     xlab = "Female body condition", ylab = "Number of males")
+
+png(file="figs/box_malesbc.png", width = 500, height = 500) # exporting the graph
+print(plot(n_males ~ BC , data = tricho_female,
+           xlab = "Female body condition", ylab = "Number of males"))
+dev.off()
+
   # Looking at the Coefficients, we can see a ternd of the number of males diminushing if it is
 # in an aggragate, and increasing if Argyrodes are present, and increasing even more with the body
 # condition of the females.
@@ -144,3 +149,16 @@ plot(n_males ~ BC, data = tricho_female)
 boxplot(n_males ~ aggregate , data = tricho_female)
   # We can see the same trends in this models, the difference is that in this model we dont
 # have presence f argyrodes as a predictive variable.
+
+
+## Exporting the AIC table, to use in R markdown.
+tcglm <- c("tcglm3", "tcglm11", "tcglm1", "tcglm7", "tcglm8", "tcglm2", "tcglm14",
+                "tcglm4", 'tcglm9', "tcglm5", "tcglm6", "tcglm10", "tcglm13", "tcglm12",
+                "tcglm15", "tcglm16")
+tcAIC <- data.frame(tcglm, tcAIC)
+tcAIC
+write.csv(x = tcAIC,
+          file = "data/processed/tcAIC.csv",
+          row.names = FALSE)
+head(tcAIC)
+
