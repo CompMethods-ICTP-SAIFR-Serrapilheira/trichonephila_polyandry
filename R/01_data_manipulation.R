@@ -2,8 +2,8 @@
 # Project: Polyandry in Trichonephila clavipes
 # Script 1: reading raw data, creating processed data and tidying the data.
 
-## This script is for cleaning the raw data, adding needed columns for future analisys and
-# exporting procecessed datasets
+## This script is for cleaning the raw data, adding needed columns for future analysis and
+# exporting processed datasets.
 
 ## Loading packages
 library(tidyr)
@@ -22,16 +22,17 @@ dim(tricho_data)
 summary(tricho_data)
 names(tricho_data)
 
-## Removing the 'observações' and 'se.alimentando' column
-tricho_data <- subset(tricho_data, select = -c(observacoes, se_alimentando, Tamanho_teia))
+## Removing the 'observações', 'se.alimentando', 'tipo', 'experimento' and 'tamanho teia' columns.
+# For our analysis, those columns won't be important.
+tricho_data <- subset(tricho_data, select = -c(observacoes, se_alimentando, Tamanho_teia, Experimento, tipo, se_alimentando.1))
 names(tricho_data)
 
 ## Changing the names of the columns
 names(tricho_data)
 colnames(tricho_data) <- c("collectors","ID_individual","ID_web", "ID_aggregate", "time", "local",
-                           "experiment", "spp", "type", "sex", "age", "web_heigth", "n_argy", "n_males",
+                            "spp", "sex", "age", "web_heigth", "n_argy", "n_males",
                            "mass_g", "total_length_mm", "cephalot_width_mm", "food_string", "fs_mass",
-                           "aggregate", "n_fem_aggregate", "if_feeding" )
+                           "aggregate", "n_fem_aggregate")
 head(tricho_data)
 
 ## Checking to see if the names of the species in the spp column are correct
@@ -43,22 +44,11 @@ tricho_data["spp"][tricho_data["spp"] == "        Argyrodes elevatus" |
 
 ## Checking all future factor columns to see if the notation is correct, and changing
 # their names if necessary
-unique(tricho_data$if_feeding)
-tricho_data["if_feeding"][tricho_data["if_feeding"] == "nao"] <- "no"
-tricho_data["if_feeding"][tricho_data["if_feeding"] == "sim"] <- "yes"
-
-
 unique(tricho_data$local)
 tricho_data["local"][tricho_data["local"] == "Regiao Lagoa" |
                        tricho_data["local"] == "Regi\xe3o Lagoa" |
                        tricho_data["local"] == "Regiao Lagoa\n"   ] <- "regiao lagoa"
 tricho_data["local"][tricho_data["local"] == "Port\xe3o Amarelo"] <- "portao amarelo"
-
-
-unique(tricho_data$type)
-tricho_data["type"][tricho_data["type"] == "femea"] <- "female"
-tricho_data["type"][tricho_data["type"] == "inquilino"] <- "tennant"
-
 
 
 unique(tricho_data$sex)
@@ -79,6 +69,10 @@ unique(tricho_data$food_string)
 tricho_data["food_string"][tricho_data["food_string"] == "com"] <- "present"
 tricho_data["food_string"][tricho_data["food_string"] == "sem"] <- "absent"
 
+unique(tricho_data$age)
+tricho_data["age"][tricho_data["age"] == "MA"] <- "A" #previously it was ma as in male adult, now we are changing for just adult
+tricho_data["age"][tricho_data["age"] == "SA"] <- "A"
+tricho_data["age"][tricho_data["age"] == "MJ"] <- "J"
 
 ## One of the objectives of this analysis is to see the relations between number of T. clavipes
 # males and the body condition (BC), treating it as a representation of their fitness. Given that, a
