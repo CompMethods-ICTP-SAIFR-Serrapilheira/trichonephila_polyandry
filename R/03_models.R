@@ -2,22 +2,19 @@
 # Project: Polyandry in Trichonephila clavipes
 # Script 3: LM
 
-## In this script we will do linear models to analyse the relations between
-# the number of the kleptoparasitic Argyrodes with the Trichonephila clavipes females paremeters as well as the
-# spacial parameters (such as the presence of a food string, the distance of the web from
-# the floor, and if the web is an aggregate) and the number of T. clavipes males in the web, as well as
-# the relation between number of males in the web and all the parameters previously described.
+## In this script we will use generalized linear models to analyse the relationships between
+# the number of males in a web with the Trichonephila clavipes females parameters, as well as the
+# spacial parameters (such as the presence of a food string, and if the web part of an aggregate).
 
 
 ## Install packages
 #install.packages("packages/modelvalidation_0.4.0.tar.gz", repos = NULL, type = "source")
 #install.packages("MuMIn")
 #install.packages("bbmle")
-install.packages("DHARMa") #qq
-install.packages("psych") #multicolinearity
-install.packages("regclass") #vif
+#install.packages("DHARMa") #qq
+#install.packages("psych") #multicolinearity
+#install.packages("regclass") #vif
 library(bbmle)
-library(ggplot2)
 library(modelvalidation)
 library(PerformanceAnalytics)
 library(MuMIn)
@@ -29,15 +26,15 @@ library(regclass)
 tricho_female <- read.csv("data/processed/tricho_female.csv")
 
 
-## In our table we have for most parameters both qualitative data (presence or absence),
+## In our table we have for most parameters variables with both qualitative data (presence or absence),
 # and quantitative data (abundance) for multiple variables. Assuming that our response variables
-# are the number of T. clavipes males and the number of the kleptoparasitic Argyrodes may be explained by
-# both only the  qualitative and quantitative parameters (i.e if there is a single food string in
-# the orb, or the mass of the food string), and taking into consideration the plots observed in the seconde script,
-# we wil do one analysis using most qualitative variables.
+# is the number of T. clavipes males may be explained by both only the  qualitative and quantitative
+# parameters (i.e if there is a single food string in the orb, or the mass of the food string),
+# and taking into consideration the plots observed in the second script, we wil do one analysis using mostly
+# qualitative variables.
 
 
-### Quantitative model using the number of males as our response variable
+### Quantitative model using the number of males as our response variable:
 
 # Since our response variable is discrete with most values in the left part of
 # the graph, I'm chosing the Poisson GLM
