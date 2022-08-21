@@ -2,43 +2,46 @@
 # Project: Polyandry in Trichonephila clavipes
 # Script 1: reading raw data, creating processed data and tidying the data.
 
+## This script is for cleaning the raw data, adding needed columns for future analisys and
+# exporting procecessed datasets
+
 ## Loading packages
 library(tidyr)
 library(dplyr)
 
 
-# Reading the data
+## Reading the data
 
 tricho_data <- read.csv("data/raw/tricho_data.csv", sep = ';', na.strings=c("","NA", "N/A"))
 
 
-# Exploring the data
+## Exploring the data
 View(tricho_data)
 head(tricho_data)
 dim(tricho_data)
 summary(tricho_data)
 names(tricho_data)
 
-# Removing the 'observações' and 'se.alimentando' column
+## Removing the 'observações' and 'se.alimentando' column
 tricho_data <- subset(tricho_data, select = -c(observacoes, se_alimentando, Tamanho_teia))
 names(tricho_data)
 
-# Changing the names of the columns
+## Changing the names of the columns
 names(tricho_data)
 colnames(tricho_data) <- c("collectors","ID_individual","ID_web", "ID_aggregate", "time", "local",
                            "experiment", "spp", "type", "sex", "age", "web_heigth", "n_argy", "n_males",
                            "mass_g", "total_length_mm", "cephalot_width_mm", "food_string", "fs_mass",
                            "aggregate", "n_fem_aggregate", "if_feeding" )
-View(tricho_data)
+head(tricho_data)
 
-# Checking to see if the names of the species in the spp clumns are correct
+## Checking to see if the names of the species in the spp column are correct
 unique(tricho_data$spp)
-#we can see that there are three different notations for the same species: Argyrodes elevatus
 
+# we can see that there are three different notations for the same species: Argyrodes elevatus
 tricho_data["spp"][tricho_data["spp"] == "        Argyrodes elevatus" |
                      tricho_data["spp"] == "       Argyrodes elevatus"] <- "Argyrodes elevatus"
 
-# Checking all future factor columns to see if the notation is correct, and changing
+## Checking all future factor columns to see if the notation is correct, and changing
 # their names if necessary
 unique(tricho_data$if_feeding)
 tricho_data["if_feeding"][tricho_data["if_feeding"] == "nao"] <- "no"
@@ -77,13 +80,47 @@ tricho_data["food_string"][tricho_data["food_string"] == "com"] <- "present"
 tricho_data["food_string"][tricho_data["food_string"] == "sem"] <- "absent"
 
 
-# For posterior analysis, it will be important to have a table with the females T. clavipes
-tricho_female <-  tricho_data %>% filter(tricho_data$spp == "Trichonephila clavipes")
+## One of the objectives of this analysis is to see the relations between number of T. clavipes
+# males and the body condition (BC), treating it as a representation of their fitness. Given that, a
+# column for body condition will be added to the df, and the BC will be calculated as the residuals
+# from the regression between the log of their mass and the total size
 
+# Adding the log mass colum to the tricho data
+tricho_data$log_mass <- log (tricho_data$mass_g, base = 10)
 
+# Subset - filtering that the log mass and the comprimento that doesnt have nas
+tricho_bc <- tricho_data %>% filter(log_mass != "NA", total_length_mm != "NA")
+nrow(tricho_bc)
+
+BC_model  <- lm(log_mass ~ total_length_mm, tricho_bc)
+BC <-  as.vector(resid(BC_model))
+
+tricho_bc$BC <- BC
+head(tricho_bc)
+class(tricho_bc$BC)
+
+## It will be important as well, to have qualitative colums of the presence and absence
+# of T. clavipes males and Argyrodes to check if one affects the other
+
+# Argyrodes
+tricho_bc$pres_argy <- tricho_bc$n_argy
+tricho_bc$pres_argy[tricho_bc$pres_argy==2]<-1
+tricho_bc$pres_argy[tricho_bc$pres_argy==3]<-1
+tricho_bc$pres_argy[tricho_bc$pres_argy==4]<-1
+unique(tricho_bc$pres_argy)
+tricho_bc$pres_argy <- factor(tricho_bc$pres_argy)
+
+# T. clavipes males
+tricho_bc$males_presence <- tricho_bc$n_males
+tricho_bc$males_presence[tricho_bc$males_presence==2]<-1
+tricho_bc$males_presence[tricho_bc$males_presence==3]<-1
+
+## For posterior analysis, it will be important to have a table with only in the females
+# of T. clavipes in the spp colum
+tricho_female <-  tricho_bc %>% filter(tricho_bc$spp == "Trichonephila clavipes")
 
 # creating a new data set with all the modifications and exporting it
-tricho_processed <-  tricho_data
+tricho_processed <-  tricho_bc
 
 if (!dir.exists("data/processed")) dir.create("data/processed")
 
