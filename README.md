@@ -13,7 +13,7 @@ Given that males exhibit preferences for larger females in other spider taxa (An
 
 ## Dataset
 
-Data collected in February 2020 in a field course in the environmental reseve: "Fazenda Água Limpa", Brasília - DF by Izabel Salvi, Felipe Malheiros, Paulo César Motta, Felipe Brasil, Luiza Cintra e Fernanda Marinho. 
+Data collected in February 2020 in a field course in the environmental reseve: "Fazenda Água Limpa", Brasília - DF by Izabel Salvi, Felipe Malheiros, Paulo César Motta, Felipe Brasil, Luiza Cintra, Fernanda Marinho, Hannah Barbosa e Beatriz Gaspar. 
 
 
 ## Analysis 
