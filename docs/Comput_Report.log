@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.19)  21 AUG 2022 12:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.19)  21 AUG 2022 21:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -485,31 +485,31 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <../figs/quantit_corr.png, id=46, 2007.5pt x 2007.5pt>
 File: ../figs/quantit_corr.png Graphic file (type png)
 <use ../figs/quantit_corr.png>
-Package pdftex.def Info: ../figs/quantit_corr.png  used on input line 190.
+Package pdftex.def Info: ../figs/quantit_corr.png  used on input line 192.
 (pdftex.def)             Requested size: 401.49289pt x 401.49289pt.
 [2 <../figs/quantit_corr.png>]
 <../figs/box_maleargy.png, id=54, 501.875pt x 501.875pt>
 File: ../figs/box_maleargy.png Graphic file (type png)
 <use ../figs/box_maleargy.png>
-Package pdftex.def Info: ../figs/box_maleargy.png  used on input line 255.
+Package pdftex.def Info: ../figs/box_maleargy.png  used on input line 257.
 (pdftex.def)             Requested size: 133.07281pt x 133.07281pt.
 <../figs/box_malesbc.png, id=55, 501.875pt x 501.875pt>
 File: ../figs/box_malesbc.png Graphic file (type png)
 <use ../figs/box_malesbc.png>
-Package pdftex.def Info: ../figs/box_malesbc.png  used on input line 255.
+Package pdftex.def Info: ../figs/box_malesbc.png  used on input line 257.
 (pdftex.def)             Requested size: 133.07281pt x 133.07281pt.
 <../figs/box_maleaggregate.png, id=56, 501.875pt x 501.875pt>
 File: ../figs/box_maleaggregate.png Graphic file (type png)
 <use ../figs/box_maleaggregate.png>
-Package pdftex.def Info: ../figs/box_maleaggregate.png  used on input line 255.
+Package pdftex.def Info: ../figs/box_maleaggregate.png  used on input line 257.
 (pdftex.def)             Requested size: 133.07281pt x 133.07281pt.
 [3 <../figs/box_maleargy.png> <../figs/box_malesbc.png> <../figs/box_maleaggregate.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 306.
+(Font)              <10> on input line 308.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 306.
+(Font)              <7> on input line 308.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 306.
+(Font)              <5> on input line 308.
 [4] (./Comput_Report.aux)
 Package rerunfilecheck Info: File `Comput_Report.out' has not changed.
 (rerunfilecheck)             Checksum: EFE2B87055A98E98344554FCE328BB98;765.
@@ -523,7 +523,7 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  72i,6n,77p,456b,435s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/izabe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb>
-Output written on Comput_Report.pdf (4 pages, 247645 bytes).
+Output written on Comput_Report.pdf (4 pages, 247758 bytes).
 PDF statistics:
  129 PDF objects out of 1000 (max. 8388607)
  101 compressed objects within 2 object streams
